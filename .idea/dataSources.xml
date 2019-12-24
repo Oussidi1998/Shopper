@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
+    <data-source source="LOCAL" name="MySQL - ecom_jee@localhost" uuid="e9ce986f-713f-4e1e-877f-54d3192e6041">
+      <driver-ref>mysql.8</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://localhost:3306/ecom_jee</jdbc-url>
+    </data-source>
+    <data-source source="LOCAL" name="NewPersistenceUnit/Hibernate" uuid="9874c3fe-c27a-41d1-98ba-3cae1ba2e121">
+      <driver-ref>mysql.8</driver-ref>
+      <synchronize>true</synchronize>
+      <imported>true</imported>
+      <remarks>Hibernate
+
+D:/4thCycle/Java/App_Ecom/src/META-INF/persistence.xml</remarks>
+      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://localhost:3306/ecom_jee</jdbc-url>
+    </data-source>
+  </component>
+</project>
