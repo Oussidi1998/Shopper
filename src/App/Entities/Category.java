@@ -7,10 +7,14 @@ import java.util.Objects;
 
 @Entity
 public class Category implements Serializable {
+
+    // attributs
     private Long idCategory;
     private String category;
     private List<Produit> produitList;
 
+
+    // relationships
     @OneToMany(mappedBy = "category")
     public List<Produit> getProduitList() {
         return produitList;
@@ -20,8 +24,15 @@ public class Category implements Serializable {
         this.produitList = produitList;
     }
 
+    // constructors
+    public Category(){}
+    public Category(Long idCategory, String category) {
+        this.idCategory = idCategory;
+        this.category = category;
+    }
+
+    // getter and setters
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
     @Column(name = "id_category")
     public Long getIdCategory() {
         return idCategory;
@@ -31,7 +42,6 @@ public class Category implements Serializable {
         this.idCategory = idCategory;
     }
 
-    @Basic
     @Column(name = "category")
     public String getCategory() {
         return category;
@@ -41,6 +51,8 @@ public class Category implements Serializable {
         this.category = category;
     }
 
+
+    // functions
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -50,4 +62,8 @@ public class Category implements Serializable {
                 Objects.equals(category, category1.category);
     }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(idCategory, category, produitList);
+    }
 }

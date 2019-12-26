@@ -1,3 +1,12 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri = "http://java.sun.com/jsp/jstl/functions" prefix = "fn" %>
+<%@ page import="App.Entities.Category" %>
+<%@ page import="App.Entities.Produit" %>
+<%@ page import="java.util.List" %>
+
+<% List<Category> categories=(List<Category>) request.getAttribute("categories");%>
+<% List<Produit> produits=(List<Produit>) request.getAttribute("produits");%>
+
 <%--
   Created by IntelliJ IDEA.
   User: Oussidi_Mohamed
@@ -96,10 +105,10 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="user" class="nav-link border border-light rounded waves-effect"
-                       target="_blank">
-                        <i class="fab fa-github mr-2"></i>Shopper GitHub
-                    </a>
+                    <a class="nav-link  waves-effect" data-toggle="modal" data-target="#modalLogin">Sign In</a>
+                </li>
+                <li class="nav-item">
+                    <button class="nav-link border border-light rounded waves-effect" data-toggle="modal" data-target="#modalRegister">Register</button>
                 </li>
             </ul>
 
@@ -273,19 +282,16 @@
                 <!-- Links -->
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item active">
-                        <a class="nav-link" href="#">All
+                        <a class="nav-link" href="#">Tous
                             <span class="sr-only">(current)</span>
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Shirts</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Sport wears</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Outwears</a>
-                    </li>
+
+                    <c:forEach var="cat" items="${categories}" >
+                        <li class="nav-item">
+                            <a class="nav-link" href="home?cat=/<c:out value='${cat.getIdCategory()}'/>"><c:out value="${cat.getCategory()}"/></a>
+                        </li>
+                    </c:forEach>
 
                 </ul>
                 <!-- Links -->
@@ -308,347 +314,48 @@
             <div class="row wow fadeIn">
 
                 <!--Grid column-->
-                <div class="col-lg-3 col-md-6 mb-4">
+                <c:forEach items="${produits}" var="product">
+                    <div class="col-lg-3 col-md-6 mb-4">
 
-                    <!--Card-->
-                    <div class="card">
+                        <!--Card-->
+                        <div class="card">
 
-                        <!--Card image-->
-                        <div class="view overlay">
-                            <img src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Vertical/12.jpg" class="card-img-top"
-                                 alt="">
-                            <a>
-                                <div class="mask rgba-white-slight"></div>
-                            </a>
+                            <!--Card image-->
+                            <div class="view overlay">
+                                <img class="card-img-top" alt="" src="data:image/jpg;base64,${product.getBase64Image()}" />
+                                <a>
+                                    <div class="mask rgba-white-slight"></div>
+                                </a>
+                            </div>
+                            <!--Card image-->
+
+                            <!--Card content-->
+                            <div class="card-body text-center">
+                                <!--Category & Title-->
+                                <a href="" class="grey-text">
+                                    <h5><c:out value="${product.getLabel()}"/></h5>
+                                </a>
+                                <h5>
+                                    <strong>
+                                        <c:if test="${!product.getDescription().equals('')}" >
+                                            <p class="dark-grey-text"><c:out value="${product.getDescription()}"/> ...
+                                            </p>
+                                        </c:if>
+                                    </strong>
+                                </h5>
+
+                                <h4 class="font-weight-bold blue-text">
+                                    <strong><c:out value="${product.getPrix()}"/> DH</strong>
+                                </h4>
+
+                            </div>
+                            <!--Card content-->
+
                         </div>
-                        <!--Card image-->
-
-                        <!--Card content-->
-                        <div class="card-body text-center">
-                            <!--Category & Title-->
-                            <a href="" class="grey-text">
-                                <h5>Shirt</h5>
-                            </a>
-                            <h5>
-                                <strong>
-                                    <a href="" class="dark-grey-text">Denim shirt
-                                        <span class="badge badge-pill danger-color">NEW</span>
-                                    </a>
-                                </strong>
-                            </h5>
-
-                            <h4 class="font-weight-bold blue-text">
-                                <strong>120$</strong>
-                            </h4>
-
-                        </div>
-                        <!--Card content-->
+                        <!--Card-->
 
                     </div>
-                    <!--Card-->
-
-                </div>
-                <!--Grid column-->
-
-                <!--Grid column-->
-                <div class="col-lg-3 col-md-6 mb-4">
-
-                    <!--Card-->
-                    <div class="card">
-
-                        <!--Card image-->
-                        <div class="view overlay">
-                            <img src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Vertical/13.jpg" class="card-img-top"
-                                 alt="">
-                            <a>
-                                <div class="mask rgba-white-slight"></div>
-                            </a>
-                        </div>
-                        <!--Card image-->
-
-                        <!--Card content-->
-                        <div class="card-body text-center">
-                            <!--Category & Title-->
-                            <a href="" class="grey-text">
-                                <h5>Sport wear</h5>
-                            </a>
-                            <h5>
-                                <strong>
-                                    <a href="" class="dark-grey-text">Sweatshirt</a>
-                                </strong>
-                            </h5>
-
-                            <h4 class="font-weight-bold blue-text">
-                                <strong>139$</strong>
-                            </h4>
-
-                        </div>
-                        <!--Card content-->
-
-                    </div>
-                    <!--Card-->
-
-                </div>
-                <!--Grid column-->
-
-                <!--Grid column-->
-                <div class="col-lg-3 col-md-6 mb-4">
-
-                    <!--Card-->
-                    <div class="card">
-
-                        <!--Card image-->
-                        <div class="view overlay">
-                            <img src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Vertical/14.jpg" class="card-img-top"
-                                 alt="">
-                            <a>
-                                <div class="mask rgba-white-slight"></div>
-                            </a>
-                        </div>
-                        <!--Card image-->
-
-                        <!--Card content-->
-                        <div class="card-body text-center">
-                            <!--Category & Title-->
-                            <a href="" class="grey-text">
-                                <h5>Sport wear</h5>
-                            </a>
-                            <h5>
-                                <strong>
-                                    <a href="" class="dark-grey-text">Grey blouse
-                                        <span class="badge badge-pill primary-color">bestseller</span>
-                                    </a>
-                                </strong>
-                            </h5>
-
-                            <h4 class="font-weight-bold blue-text">
-                                <strong>99$</strong>
-                            </h4>
-
-                        </div>
-                        <!--Card content-->
-
-                    </div>
-                    <!--Card-->
-
-                </div>
-                <!--Grid column-->
-
-                <!--Fourth column-->
-                <div class="col-lg-3 col-md-6 mb-4">
-
-                    <!--Card-->
-                    <div class="card">
-
-                        <!--Card image-->
-                        <div class="view overlay">
-                            <img src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Vertical/15.jpg" class="card-img-top"
-                                 alt="">
-                            <a>
-                                <div class="mask rgba-white-slight"></div>
-                            </a>
-                        </div>
-                        <!--Card image-->
-
-                        <!--Card content-->
-                        <div class="card-body text-center">
-                            <!--Category & Title-->
-                            <a href="" class="grey-text">
-                                <h5>Outwear</h5>
-                            </a>
-                            <h5>
-                                <strong>
-                                    <a href="" class="dark-grey-text">Black jacket</a>
-                                </strong>
-                            </h5>
-
-                            <h4 class="font-weight-bold blue-text">
-                                <strong>219$</strong>
-                            </h4>
-
-                        </div>
-                        <!--Card content-->
-
-                    </div>
-                    <!--Card-->
-
-                </div>
-                <!--Fourth column-->
-
-            </div>
-            <!--Grid row-->
-
-            <!--Grid row-->
-            <div class="row wow fadeIn">
-
-                <!--Grid column-->
-                <div class="col-lg-3 col-md-6 mb-4">
-
-                    <!--Card-->
-                    <div class="card">
-
-                        <!--Card image-->
-                        <div class="view overlay">
-                            <img src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Vertical/13.jpg" class="card-img-top"
-                                 alt="">
-                            <a>
-                                <div class="mask rgba-white-slight"></div>
-                            </a>
-                        </div>
-                        <!--Card image-->
-
-                        <!--Card content-->
-                        <div class="card-body text-center">
-                            <!--Category & Title-->
-                            <a href="" class="grey-text">
-                                <h5>Shirt</h5>
-                            </a>
-                            <h5>
-                                <strong>
-                                    <a href="" class="dark-grey-text">Denim shirt
-                                        <span class="badge badge-pill danger-color">NEW</span>
-                                    </a>
-                                </strong>
-                            </h5>
-
-                            <h4 class="font-weight-bold blue-text">
-                                <strong>120$</strong>
-                            </h4>
-
-                        </div>
-                        <!--Card content-->
-
-                    </div>
-                    <!--Card-->
-
-                </div>
-                <!--Grid column-->
-
-                <!--Grid column-->
-                <div class="col-lg-3 col-md-6 mb-4">
-
-                    <!--Card-->
-                    <div class="card">
-
-                        <!--Card image-->
-                        <div class="view overlay">
-                            <img src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Vertical/14.jpg" class="card-img-top"
-                                 alt="">
-                            <a>
-                                <div class="mask rgba-white-slight"></div>
-                            </a>
-                        </div>
-                        <!--Card image-->
-
-                        <!--Card content-->
-                        <div class="card-body text-center">
-                            <!--Category & Title-->
-                            <a href="" class="grey-text">
-                                <h5>Sport wear</h5>
-                            </a>
-                            <h5>
-                                <strong>
-                                    <a href="" class="dark-grey-text">Sweatshirt</a>
-                                </strong>
-                            </h5>
-
-                            <h4 class="font-weight-bold blue-text">
-                                <strong>139$</strong>
-                            </h4>
-
-                        </div>
-                        <!--Card content-->
-
-                    </div>
-                    <!--Card-->
-
-                </div>
-                <!--Grid column-->
-
-                <!--Grid column-->
-                <div class="col-lg-3 col-md-6 mb-4">
-
-                    <!--Card-->
-                    <div class="card">
-
-                        <!--Card image-->
-                        <div class="view overlay">
-                            <img src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Vertical/15.jpg" class="card-img-top"
-                                 alt="">
-                            <a>
-                                <div class="mask rgba-white-slight"></div>
-                            </a>
-                        </div>
-                        <!--Card image-->
-
-                        <!--Card content-->
-                        <div class="card-body text-center">
-                            <!--Category & Title-->
-                            <a href="" class="grey-text">
-                                <h5>Sport wear</h5>
-                            </a>
-                            <h5>
-                                <strong>
-                                    <a href="" class="dark-grey-text">Grey blouse
-                                        <span class="badge badge-pill primary-color">bestseller</span>
-                                    </a>
-                                </strong>
-                            </h5>
-
-                            <h4 class="font-weight-bold blue-text">
-                                <strong>99$</strong>
-                            </h4>
-
-                        </div>
-                        <!--Card content-->
-
-                    </div>
-                    <!--Card-->
-
-                </div>
-                <!--Grid column-->
-
-                <!--Fourth column-->
-                <div class="col-lg-3 col-md-6 mb-4">
-
-                    <!--Card-->
-                    <div class="card">
-
-                        <!--Card image-->
-                        <div class="view overlay">
-                            <img src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Vertical/12.jpg" class="card-img-top"
-                                 alt="">
-                            <a>
-                                <div class="mask rgba-white-slight"></div>
-                            </a>
-                        </div>
-                        <!--Card image-->
-
-                        <!--Card content-->
-                        <div class="card-body text-center">
-                            <!--Category & Title-->
-                            <a href="" class="grey-text">
-                                <h5>Outwear</h5>
-                            </a>
-                            <h5>
-                                <strong>
-                                    <a href="" class="dark-grey-text">Black jacket</a>
-                                </strong>
-                            </h5>
-
-                            <h4 class="font-weight-bold blue-text">
-                                <strong>219$</strong>
-                            </h4>
-
-                        </div>
-                        <!--Card content-->
-
-                    </div>
-                    <!--Card-->
-
-                </div>
-                <!--Fourth column-->
-
+                </c:forEach>
             </div>
             <!--Grid row-->
 
@@ -701,77 +408,99 @@
 
 <!--Footer-->
 <footer class="page-footer text-center font-small mt-4 wow fadeIn">
-
-    <!--Call to action-->
-    <div class="pt-4">
-        <a class="btn btn-outline-white" href="https://mdbootstrap.com/docs/jquery/getting-started/download/" target="_blank"
-           role="button">Download MDB
-            <i class="fas fa-download ml-2"></i>
-        </a>
-        <a class="btn btn-outline-white" href="https://mdbootstrap.com/education/bootstrap/" target="_blank" role="button">Start
-            free tutorial
-            <i class="fas fa-graduation-cap ml-2"></i>
-        </a>
-    </div>
-    <!--/.Call to action-->
-
-    <hr class="my-4">
-
-    <!-- Social icons -->
-    <div class="pb-4">
-        <a href="https://www.facebook.com/mdbootstrap" target="_blank">
-            <i class="fab fa-facebook-f mr-3"></i>
-        </a>
-
-        <a href="https://twitter.com/MDBootstrap" target="_blank">
-            <i class="fab fa-twitter mr-3"></i>
-        </a>
-
-        <a href="https://www.youtube.com/watch?v=7MUISDJ5ZZ4" target="_blank">
-            <i class="fab fa-youtube mr-3"></i>
-        </a>
-
-        <a href="https://plus.google.com/u/0/b/107863090883699620484" target="_blank">
-            <i class="fab fa-google-plus-g mr-3"></i>
-        </a>
-
-        <a href="https://dribbble.com/mdbootstrap" target="_blank">
-            <i class="fab fa-dribbble mr-3"></i>
-        </a>
-
-        <a href="https://pinterest.com/mdbootstrap" target="_blank">
-            <i class="fab fa-pinterest mr-3"></i>
-        </a>
-
-        <a href="https://github.com/mdbootstrap/bootstrap-material-design" target="_blank">
-            <i class="fab fa-github mr-3"></i>
-        </a>
-
-        <a href="http://codepen.io/mdbootstrap/" target="_blank">
-            <i class="fab fa-codepen mr-3"></i>
-        </a>
-    </div>
-    <!-- Social icons -->
-
     <!--Copyright-->
     <div class="footer-copyright py-3">
         © 2019 Copyright:
-        <a href="https://mdbootstrap.com/education/bootstrap/" target="_blank"> MDBootstrap.com </a>
+        <a href="https://Shopper.com/"> Shopper.com </a>
     </div>
     <!--/.Copyright-->
+
 
 </footer>
 <!--/.Footer-->
 
+<!-- modals -->
+<div class="modal fade" id="modalLogin" tabindex="-1" aria-hidden="true" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Login</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body pt-4">
+                <form action="login">
+                    <div class="form-group mb-4">
+                        <input type="email" class="form-control p-4 " name="email" placeholder="Enter email">
+                    </div>
+                    <div class="form-group  mb-5">
+                        <input type="password" class="form-control p-4" name="pwd" placeholder="Enter password">
+                    </div>
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary">Se Connecter</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalRegister" tabindex="-1" aria-hidden="true" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Register</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body pt-4">
+                <form action="register">
+                    <div class="form-group row mb-4">
+                        <div class="col"><input type="text" class="form-control p-4 " name="nom" placeholder="First Name"></div>
+                        <div class="col"><input type="text" class="form-control p-4 " name="prenom" placeholder="Last Name"></div>
+                    </div>
+                    <div class="form-group row mb-4">
+                        <div class="col"><input type="text" class="form-control p-4 " name="username" placeholder="User Name"></div>
+                        <div class="col"><input type="email" class="form-control p-4 " name="email" placeholder="Email"></div>
+                    </div>
+                    <div class="form-group row mb-4">
+                        <div class="col"><input type="password" class="form-control p-4 " name="pwd" placeholder="Password"></div>
+                        <div class="col"><input type="password" class="form-control p-4 " name="c_pwd" placeholder="Confirm Password"></div>
+                    </div>
+                    <div class="form-group row mb-4">
+                        <div class="col"><select class="form-control" name="civil" id=""><option selected disabled>--Gender--</option><option value="f">Female</option><option value="m">Male</option></select></div>
+                        <div class="col"><input type="file" class="form-control" name="avatar"><label for="">profil picture</label></div>
+                    </div>
+                    <div class="form-group row mb-4">
+                        <div class="col"><input type="text" class="form-control p-4 " name="pays" placeholder=" Pays" ></div>
+                        <div class="col"><input type="text" class="form-control p-4 " name="ville" placeholder=" City"></div>
+                        <div class="col"> <input type="number" class="form-control p-4" name="zipcode" placeholder=" ZIPCODE"></div>
+                    </div>
+                    <div class="form-group row mb-5">
+                        <div class="col"><textarea name="adresse" class="form-control" cols="40" rows="3" placeholder="Address"></textarea></div>
+                    </div>
+
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary">Register</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end modals -->
+
 <!-- SCRIPTS -->
 <!-- JQuery -->
-<script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
+<script type="text/javascript"><%@include file="../js/jquery-3.4.1.min.js"%></script>
 <!-- Bootstrap tooltips -->
-<script type="text/javascript" src="js/popper.min.js"></script>
+<script type="text/javascript"><%@include file="../js/popper.min.js"%></script>
 <!-- Bootstrap core JavaScript -->
-<script type="text/javascript" src="js/bootstrap.min.js"></script>
+<script type="text/javascript"><%@include file="../js/bootstrap.min.js"%></script>
 <!-- MDB core JavaScript -->
-<script type="text/javascript" src="js/mdb.min.js"></script>
+<script type="text/javascript"><%@include file="../js/mdb.min.js"%></script>
 <!-- Initializations -->
 <script type="text/javascript">
     // Animations initialization

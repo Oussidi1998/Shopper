@@ -7,21 +7,25 @@ import java.util.Objects;
 @Entity
 @Table(name = "detail")
 public class DetailCommand implements Serializable {
-    private Long id;
+
+    // attributs
+    @EmbeddedId
+    private Produit_Command_Id id;
     private int quantity;
     private int prix;
-    private int idProduit;
-    private int idCommand;
 
-    @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
-    public Long getId() {
-        return id;
-    }
-    public void setId(Long id) {
-        this.id = id;
-    }
+    // relationships
+    @ManyToOne
+    @MapsId("idProduit")
+    @JoinColumn(name = "produit_id_produit")
+    private Produit produit;
+    @ManyToOne
+    @MapsId("idCommand")
+    @JoinColumn(name = "command_id_command")
+    private Command command;
 
+
+    // getter and setters
     @Column(name = "quantity")
     public int getQuantity() {
         return quantity;
@@ -40,33 +44,32 @@ public class DetailCommand implements Serializable {
         this.prix = prix;
     }
 
-    @Column(name = "id_produit")
-    public int getIdProduit() {
-        return idProduit;
+    public Produit getProduit() {return produit;}
+    public void setProduit(Produit produit) {
+        this.produit = produit;
     }
 
-    public void setIdProduit(int idProduit) {
-        this.idProduit = idProduit;
+    public Command getCommand() {
+        return command;
     }
-
-    @Column(name = "id_command")
-    public int getIdCommand() {
-        return idCommand;
-    }
-
-    public void setIdCommand(int idCommand) {
-        this.idCommand = idCommand;
+    public void setCommand(Command command) {
+        this.command = command;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        DetailCommand detail = (DetailCommand) o;
-        return quantity == detail.quantity &&
-                prix == detail.prix &&
-                idProduit == detail.idProduit &&
-                idCommand == detail.idCommand;
+        DetailCommand that = (DetailCommand) o;
+        return quantity == that.quantity &&
+                prix == that.prix &&
+                Objects.equals(id, that.id) &&
+                Objects.equals(produit, that.produit) &&
+                Objects.equals(command, that.command);
     }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, quantity, prix, produit, command);
+    }
 }

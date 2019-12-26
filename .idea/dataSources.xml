@@ -17,5 +17,15 @@ D:/4thCycle/Java/App_Ecom/src/META-INF/persistence.xml</remarks>
       <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
       <jdbc-url>jdbc:mysql://localhost:3306/ecom_jee</jdbc-url>
     </data-source>
+    <data-source source="LOCAL" name="PersistenceUnit/Hibernate" uuid="419f57f9-8bcc-451c-8f06-30706a6b4754">
+      <driver-ref>mysql.8</driver-ref>
+      <synchronize>true</synchronize>
+      <imported>true</imported>
+      <remarks>Hibernate
+
+D:/4thCycle/Java/Shopper/src/META-INF/persistence.xml</remarks>
+      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://localhost:3306/ecom_jee</jdbc-url>
+    </data-source>
   </component>
 </project>

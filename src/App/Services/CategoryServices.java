@@ -13,8 +13,9 @@ import java.util.List;
 
 public class CategoryServices {
 
+    public static final EntityManager em = DB.getEM();
+
     public static List<Category> getAllCategories(){
-        EntityManager em = DB.getEM();
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Category> cq = cb.createQuery(Category.class);
         Root<Category> rootEntry = cq.from(Category.class);
@@ -22,4 +23,6 @@ public class CategoryServices {
         TypedQuery<Category> allQuery = em.createQuery(all);
         return allQuery.getResultList();
     }
+
+
 }

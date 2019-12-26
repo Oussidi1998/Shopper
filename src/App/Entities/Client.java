@@ -2,11 +2,14 @@ package App.Entities;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
 @Entity
 public class Client implements Serializable {
+
+    // attributs
     private Long idClient;
     private String nom;
     private String prenom;
@@ -18,8 +21,10 @@ public class Client implements Serializable {
     private String pays;
     private String ville;
     private int zipcode;
-    private String avatar;
+    private byte[] avatar;
     private List<Command> commandList;
+
+    // relationships
     @OneToMany(mappedBy = "client")
     public List<Command> getCommandList() {
         return commandList;
@@ -28,7 +33,24 @@ public class Client implements Serializable {
         this.commandList = commandList;
     }
 
+    // constructors
+    public  Client(){}
+    public Client(Long idClient, String nom, String prenom, String civil, String email, String username, String password, String adresse, String pays, String ville, int zipcode, byte[] avatar) {
+        this.idClient = idClient;
+        this.nom = nom;
+        this.prenom = prenom;
+        this.civil = civil;
+        this.email = email;
+        this.username = username;
+        this.password = password;
+        this.adresse = adresse;
+        this.pays = pays;
+        this.ville = ville;
+        this.zipcode = zipcode;
+        this.avatar = avatar;
+    }
 
+    // getter and setters
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     @Column(name = "id_client")
@@ -130,16 +152,19 @@ public class Client implements Serializable {
         this.zipcode = zipcode;
     }
 
-    @Basic
+    @Lob
+    @Basic(fetch = FetchType.LAZY)
     @Column(name = "avatar")
-    public String getAvatar() {
+    public byte[] getAvatar() {
         return avatar;
     }
 
-    public void setAvatar(String avatar) {
+    public void setAvatar(byte[] avatar) {
         this.avatar = avatar;
     }
 
+
+    // functions
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -157,5 +182,12 @@ public class Client implements Serializable {
                 Objects.equals(pays, client.pays) &&
                 Objects.equals(ville, client.ville) &&
                 Objects.equals(avatar, client.avatar);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = Objects.hash(idClient, nom, prenom, civil, email, username, password, adresse, pays, ville, zipcode, commandList);
+        result = 31 * result + Arrays.hashCode(avatar);
+        return result;
     }
 }

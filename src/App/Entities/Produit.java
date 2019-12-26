@@ -2,28 +2,51 @@ package App.Entities;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @Entity
 public class Produit implements Serializable {
+
+    // attributs
     private Long idProduit;
     private String label;
     private String description;
     private int prix;
-    private String image;
+    private  byte[] image;
+    private String base64Image;
     private int promo;
     private Category category;
+    private List<DetailCommand> listProductInCommands =new ArrayList<>() ;
 
+    // constructors
+    public Produit(Long idProduit, String label, String description, int prix, byte[] image, String base64Image, int promo, Category category) {
+        this.idProduit = idProduit;
+        this.label = label;
+        this.description = description;
+        this.prix = prix;
+        this.image = image;
+        this.base64Image = base64Image;
+        this.promo = promo;
+        this.category = category;
+    }
+
+    public Produit(){}
+
+    // getters and setters
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     @Column(name = "id_produit")
     public Long getIdProduit() {
         return idProduit;
     }
-
     public void setIdProduit(Long idProduit) {
         this.idProduit = idProduit;
+    }
+
+    @Transient
+    public String getBase64Image() {
+        base64Image = Base64.getEncoder().encodeToString(this.image);
+        return base64Image;
     }
 
     @Column(name = "label")
@@ -53,12 +76,14 @@ public class Produit implements Serializable {
         this.prix = prix;
     }
 
+    @Lob
     @Column(name = "image")
-    public String getImage() {
+    @Basic(fetch = FetchType.LAZY)
+    public  byte[] getImage() {
         return image;
     }
 
-    public void setImage(String image) {
+    public void setImage( byte[] image) {
         this.image = image;
     }
 
@@ -71,6 +96,25 @@ public class Produit implements Serializable {
         this.promo = promo;
     }
 
+    // relationships
+    @OneToMany(mappedBy = "produit")
+    public List<DetailCommand> getCommandItems() {
+        return listProductInCommands;
+    }
+    public void setCommandItems(List<DetailCommand> items) {
+        listProductInCommands = items;
+    }
+
+    @ManyToOne
+    public Category getCategory() {
+        return category;
+    }
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
+
+    // functions
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -84,12 +128,10 @@ public class Produit implements Serializable {
                 Objects.equals(image, produit.image);
     }
 
-    @ManyToOne
-    public Category getCategory() {
-        return category;
-    }
-
-    public void setCategory(Category category) {
-        this.category = category;
+    @Override
+    public int hashCode() {
+        int result = Objects.hash(idProduit, label, description, prix, base64Image, promo, category, listProductInCommands);
+        result = 31 * result + Arrays.hashCode(image);
+        return result;
     }
 }
