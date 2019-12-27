@@ -12,8 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet(urlPatterns = {"/home",""})
-public class HomeController extends HttpServlet {
+@WebServlet(urlPatterns = {"/product"})
+public class ProductController extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
     }
 
@@ -22,17 +22,23 @@ public class HomeController extends HttpServlet {
         ProduitServices serviceProducts = new ProduitServices();
         CategoryServices serviceCats = new CategoryServices();
 
-        List<Produit> listProduits = serviceProducts.getAllProducts();
-        String category = req.getParameter("cat");
-        if (category!=null && category.length()>=1){
-            listProduits = serviceProducts.getListProduitByCatgeory(Long.decode(category));
-            System.out.println(listProduits.size());
+        String idProduct = req.getParameter("id");
+         if (idProduct!=null){
+            Produit product = serviceProducts.getProductById(Long.decode(idProduct));
+            req.setAttribute("product",product);
+             System.out.println(product.getLabel());
+            req.getRequestDispatcher("Views/Product.jsp").forward(req,res);
+        }else
+        {
+            List<Produit> listProduits = serviceProducts.getAllProducts();
+            List<Category> listCategories = serviceCats.getAllCategories();
+            req.setAttribute("produits",listProduits);
+            req.setAttribute("categories",listCategories);
+            req.getRequestDispatcher("Views/Home.jsp").forward(req,res);
         }
-        List<Category> listCategories = serviceCats.getAllCategories();
 
-        req.setAttribute("produits",listProduits);
-        req.setAttribute("categories",listCategories);
-        req.getRequestDispatcher("Views/Home.jsp").forward(req,res);
+
+
     }
 
 }

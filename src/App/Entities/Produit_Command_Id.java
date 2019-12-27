@@ -8,7 +8,9 @@ import java.util.Objects;
 @Embeddable
 public class Produit_Command_Id  implements Serializable {
 
+    @Column(name = "id_produit")
     private Long idProduit;
+    @Column(name = "id_command")
     private Long idCommand;
 
     public Produit_Command_Id(){}

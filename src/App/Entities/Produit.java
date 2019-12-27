@@ -106,6 +106,7 @@ public class Produit implements Serializable {
     }
 
     @ManyToOne
+    @JoinColumn(name = "id_category")
     public Category getCategory() {
         return category;
     }

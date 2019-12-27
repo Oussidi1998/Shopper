@@ -14,109 +14,10 @@
   Time: 20:01
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<!DOCTYPE html>
-<html lang="en">
 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Shopper</title>
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
-    <!-- Bootstrap core CSS -->
-    <style><%@include file="../css/bootstrap.min.css"%></style>
-    <!-- Material Design Bootstrap -->
-    <style><%@include file="../css/mdb.min.css"%></style>
-    <!-- Your custom styles (optional) -->
-    <style><%@include file="../css/style.min.css"%></style>
-    <style type="text/css">
-        html,
-        body,
-        header,
-        .carousel {
-            height: 60vh;
-        }
-
-        @media (max-width: 740px) {
-
-            html,
-            body,
-            header,
-            .carousel {
-                height: 100vh;
-            }
-        }
-
-        @media (min-width: 800px) and (max-width: 850px) {
-
-            html,
-            body,
-            header,
-            .carousel {
-                height: 100vh;
-            }
-        }
-
-    </style>
-</head>
-
-<body>
-
-<!-- Navbar -->
-<nav class="navbar fixed-top navbar-expand-lg navbar-light white scrolling-navbar">
-    <div class="container">
-
-        <!-- Brand -->
-        <a class="navbar-brand waves-effect" href="./">
-            <strong class="blue-text">Shopper</strong>
-        </a>
-
-        <!-- Collapse -->
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <!-- Links -->
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-
-            <!-- Left -->
-            <ul class="navbar-nav mr-auto"></ul>
-
-            <!-- Right -->
-            <ul class="navbar-nav nav-flex-icons">
-                <li class="nav-item">
-                    <a href="cart" class="nav-link waves-effect">
-                        <span class="badge red z-depth-1 mr-1"> 1 </span>
-                        <i class="fas fa-shopping-cart"></i>
-                        <span class="clearfix d-none d-sm-inline-block"> Cart </span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link waves-effect">
-                        <i class="fab fa-facebook-f"></i>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="https://twitter.com/MDBootstrap" class="nav-link waves-effect" target="_blank">
-                        <i class="fab fa-twitter"></i>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link  waves-effect" data-toggle="modal" data-target="#modalLogin">Sign In</a>
-                </li>
-                <li class="nav-item">
-                    <button class="nav-link border border-light rounded waves-effect" data-toggle="modal" data-target="#modalRegister">Register</button>
-                </li>
-            </ul>
-
-        </div>
-
-    </div>
-</nav>
-<!-- Navbar -->
+<jsp:include page="../Partials/Header.jsp" >
+    <jsp:param name="title" value="Shopper | Home"/>
+</jsp:include>
 
 <!--Carousel Wrapper-->
 <div id="carousel-example-1z" class="carousel slide carousel-fade pt-4" data-ride="carousel">
@@ -282,19 +183,19 @@
                 <!-- Links -->
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item active">
-                        <a class="nav-link" href="#">Tous
+                        <a class="nav-link" href="home">Tous
                             <span class="sr-only">(current)</span>
                         </a>
                     </li>
 
-                    <c:forEach var="cat" items="${categories}" >
+                    <c:forEach var="cat" items="h" >
                         <li class="nav-item">
-                            <a class="nav-link" href="home?cat=/<c:out value='${cat.getIdCategory()}'/>"><c:out value="${cat.getCategory()}"/></a>
+                            <a class="nav-link" href="home?cat=<c:out value='${cat.getIdCategory()}'/>"><c:out value="${cat.getCategory()}"/></a>
                         </li>
                     </c:forEach>
 
                 </ul>
-                <!-- Links -->
+                <!--Home.jsp Links -->
 
                 <form class="form-inline">
                     <div class="md-form my-0">
@@ -316,44 +217,37 @@
                 <!--Grid column-->
                 <c:forEach items="${produits}" var="product">
                     <div class="col-lg-3 col-md-6 mb-4">
-
-                        <!--Card-->
+                       <a href="product?id=<c:out value="${product.getIdProduit()}"/>">
+                               <!--Card-->
                         <div class="card">
-
-                            <!--Card image-->
-                            <div class="view overlay">
-                                <img class="card-img-top" alt="" src="data:image/jpg;base64,${product.getBase64Image()}" />
-                                <a>
+                                <!--Card image-->
+                                <div class="view overlay">
+                                    <img class="card-img-top" alt="" src="data:image/jpg;base64,<c:out value="${product.getBase64Image()}"/>" />
                                     <div class="mask rgba-white-slight"></div>
-                                </a>
+                                </div>
+                                <!--Card image-->
+
+                                <!--Card content-->
+                                <div class="card-body text-center">
+                                    <!--Category & Title-->
+                                    <h5 class="grey-text"><c:out value="${product.getLabel()}"/></h5>
+                                    <h5>
+                                        <strong>
+                                            <c:if test="${!product.getDescription().equals('')}" >
+                                                <p class="dark-grey-text"><c:out value="${product.getDescription()}"/> ...
+                                                </p>
+                                            </c:if>
+                                        </strong>
+                                    </h5>
+
+                                    <h4 class="font-weight-bold blue-text">
+                                        <strong><c:out value="${product.getPrix()}"/> DH</strong>
+                                    </h4>
+                                </div>
+                                <!--Card content-->
                             </div>
-                            <!--Card image-->
-
-                            <!--Card content-->
-                            <div class="card-body text-center">
-                                <!--Category & Title-->
-                                <a href="" class="grey-text">
-                                    <h5><c:out value="${product.getLabel()}"/></h5>
-                                </a>
-                                <h5>
-                                    <strong>
-                                        <c:if test="${!product.getDescription().equals('')}" >
-                                            <p class="dark-grey-text"><c:out value="${product.getDescription()}"/> ...
-                                            </p>
-                                        </c:if>
-                                    </strong>
-                                </h5>
-
-                                <h4 class="font-weight-bold blue-text">
-                                    <strong><c:out value="${product.getPrix()}"/> DH</strong>
-                                </h4>
-
-                            </div>
-                            <!--Card content-->
-
-                        </div>
                         <!--Card-->
-
+                        </a>
                     </div>
                 </c:forEach>
             </div>
@@ -363,7 +257,7 @@
         <!--Section: Products v.3-->
 
         <!--Pagination-->
-        <nav class="d-flex justify-content-center wow fadeIn">
+        <%--<nav class="d-flex justify-content-center wow fadeIn">
             <ul class="pagination pg-blue">
 
                 <!--Arrow left-->
@@ -399,114 +293,11 @@
                     </a>
                 </li>
             </ul>
-        </nav>
+        </nav>--%>
         <!--Pagination-->
 
     </div>
 </main>
 <!--Main layout-->
 
-<!--Footer-->
-<footer class="page-footer text-center font-small mt-4 wow fadeIn">
-    <!--Copyright-->
-    <div class="footer-copyright py-3">
-        © 2019 Copyright:
-        <a href="https://Shopper.com/"> Shopper.com </a>
-    </div>
-    <!--/.Copyright-->
-
-
-</footer>
-<!--/.Footer-->
-
-<!-- modals -->
-<div class="modal fade" id="modalLogin" tabindex="-1" aria-hidden="true" role="dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Login</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body pt-4">
-                <form action="login">
-                    <div class="form-group mb-4">
-                        <input type="email" class="form-control p-4 " name="email" placeholder="Enter email">
-                    </div>
-                    <div class="form-group  mb-5">
-                        <input type="password" class="form-control p-4" name="pwd" placeholder="Enter password">
-                    </div>
-                    <div class="text-center">
-                        <button type="submit" class="btn btn-primary">Se Connecter</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="modal fade" id="modalRegister" tabindex="-1" aria-hidden="true" role="dialog">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Register</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body pt-4">
-                <form action="register">
-                    <div class="form-group row mb-4">
-                        <div class="col"><input type="text" class="form-control p-4 " name="nom" placeholder="First Name"></div>
-                        <div class="col"><input type="text" class="form-control p-4 " name="prenom" placeholder="Last Name"></div>
-                    </div>
-                    <div class="form-group row mb-4">
-                        <div class="col"><input type="text" class="form-control p-4 " name="username" placeholder="User Name"></div>
-                        <div class="col"><input type="email" class="form-control p-4 " name="email" placeholder="Email"></div>
-                    </div>
-                    <div class="form-group row mb-4">
-                        <div class="col"><input type="password" class="form-control p-4 " name="pwd" placeholder="Password"></div>
-                        <div class="col"><input type="password" class="form-control p-4 " name="c_pwd" placeholder="Confirm Password"></div>
-                    </div>
-                    <div class="form-group row mb-4">
-                        <div class="col"><select class="form-control" name="civil" id=""><option selected disabled>--Gender--</option><option value="f">Female</option><option value="m">Male</option></select></div>
-                        <div class="col"><input type="file" class="form-control" name="avatar"><label for="">profil picture</label></div>
-                    </div>
-                    <div class="form-group row mb-4">
-                        <div class="col"><input type="text" class="form-control p-4 " name="pays" placeholder=" Pays" ></div>
-                        <div class="col"><input type="text" class="form-control p-4 " name="ville" placeholder=" City"></div>
-                        <div class="col"> <input type="number" class="form-control p-4" name="zipcode" placeholder=" ZIPCODE"></div>
-                    </div>
-                    <div class="form-group row mb-5">
-                        <div class="col"><textarea name="adresse" class="form-control" cols="40" rows="3" placeholder="Address"></textarea></div>
-                    </div>
-
-                    <div class="text-center">
-                        <button type="submit" class="btn btn-primary">Register</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- end modals -->
-
-<!-- SCRIPTS -->
-<!-- JQuery -->
-<script type="text/javascript"><%@include file="../js/jquery-3.4.1.min.js"%></script>
-<!-- Bootstrap tooltips -->
-<script type="text/javascript"><%@include file="../js/popper.min.js"%></script>
-<!-- Bootstrap core JavaScript -->
-<script type="text/javascript"><%@include file="../js/bootstrap.min.js"%></script>
-<!-- MDB core JavaScript -->
-<script type="text/javascript"><%@include file="../js/mdb.min.js"%></script>
-<!-- Initializations -->
-<script type="text/javascript">
-    // Animations initialization
-    new WOW().init();
-
-</script>
-</body>
-
-</html>
+<jsp:include page="../Partials/Footer.jsp" />

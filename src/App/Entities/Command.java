@@ -82,6 +82,7 @@ public class Command implements Serializable {
 
     // relationships
     @ManyToOne
+    @JoinColumn(name = "id_client")
     public Client getClient() {
         return client;
     }

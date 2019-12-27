@@ -17,11 +17,11 @@ public class DetailCommand implements Serializable {
     // relationships
     @ManyToOne
     @MapsId("idProduit")
-    @JoinColumn(name = "produit_id_produit")
+    @JoinColumn(name = "id_produit")
     private Produit produit;
     @ManyToOne
     @MapsId("idCommand")
-    @JoinColumn(name = "command_id_command")
+    @JoinColumn(name = "id_command")
     private Command command;
 
 
