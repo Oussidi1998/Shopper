@@ -3,7 +3,7 @@ Simple E-commerce App made with Java EE (MVC and JPA)
 
 
 ## Demo
-	you can watch the demo from [Here](https://youtu.be/RzCFLcYheRU)
+you can watch the demo from [Here](https://youtu.be/RzCFLcYheRU)
 
 ## Features
 
