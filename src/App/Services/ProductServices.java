@@ -36,7 +36,6 @@ public class ProductServices {
         em.getTransaction().begin();
         em.persist(product);
         em.getTransaction().commit();
-        em.close();
 
         return product;
     }

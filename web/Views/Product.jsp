@@ -61,7 +61,7 @@
 
                     <form action="product" method="post" class="d-flex justify-content-left">
                         <!-- Default input -->
-                        <input type="hidden" name="id_produit" value="${product.getIdProduit()}" >
+                        <input type="hidden" name="id_produit" value="${product.getIdProduct()}" >
                         <input type="number" name="qte" value="1" aria-label="Search" class="form-control" style="width: 100px">
                         <button class="btn btn-primary btn-md my-0 p" type="submit">Add to cart
                             <i class="fas fa-shopping-cart ml-1"></i>

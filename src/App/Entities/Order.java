@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
+@Table(name = "t_order")
 public class Order implements Serializable {
 
     // attributs

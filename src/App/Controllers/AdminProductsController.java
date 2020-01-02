@@ -4,7 +4,7 @@ import App.Entities.Category;
 import App.Entities.Product;
 import App.Services.CategoryServices;
 import App.Services.ProductServices;
-import App.Utils.Util;
+import org.apache.commons.io.IOUtils;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
 @WebServlet(urlPatterns = "/admin/products")
@@ -30,7 +31,9 @@ public class AdminProductsController extends HttpServlet {
             String description=  req.getParameter("description");
             double promo=  Double.parseDouble(req.getParameter("promo"));
             Part filepart = req.getPart("image");
-            byte[] image = Util.getImageByte(filepart.getName());
+
+            InputStream is =  filepart.getInputStream();
+            byte[] image = IOUtils.toByteArray(is);
 
             Category category = categoryServices.getAllCategoryById(Long.decode(req.getParameter("category")));
 
@@ -41,7 +44,7 @@ public class AdminProductsController extends HttpServlet {
                 req.setAttribute("msg","There was an error while adding the product");
             }
 
-            req.getRequestDispatcher("../Views/AdminProducts.jsp").forward(req,resp);
+            doGet(req,resp);
 
         }
 
@@ -50,6 +53,9 @@ public class AdminProductsController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         List<Product> listProducts = productServices.getAllProducts();
         List<Category> listCats = categoryServices.getAllCategories();
+
+        System.out.println(listProducts.size());
+        System.out.println(listCats.size());
         req.setAttribute("products",listProducts);
         req.setAttribute("cats",listCats);
         req.getRequestDispatcher("../Views/AdminProducts.jsp").forward(req,resp);

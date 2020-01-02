@@ -29,7 +29,7 @@
         <div class="row justify-content-md-center mb-5">
 
             <!--Grid column-->
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <!--Card-->
                 <a href="admin/products">
                     <div class="card text-center">
@@ -37,29 +37,29 @@
                             <i class="fas  fa-5x fa-box"></i>
                         </div>
                         <div class="p-3 mt-4">
-                            <h2>Products Management</h2>
+                            <h2>Products</h2>
                         </div>
                     </div>
                 </a>
                 <!--/.Card-->
             </div>
             <!--Grid column-->
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <!--Card-->
-                <a href="admin/products">
+                <a href="admin/clients">
                     <div class="card text-center">
                         <div class=" p-3">
                             <i class="fas  fa-5x fa-box"></i>
                         </div>
                         <div class="p-3 mt-4">
-                            <h2>Clients Management</h2>
+                            <h2>Clients </h2>
                         </div>
                     </div>
                 </a>
                 <!--/.Card-->
             </div>
             <!--Grid column-->
-            <div class="col-md-4">
+            <div class="col-md-3">
 
                 <!--Card-->
                 <a href="admin/categories">
@@ -68,7 +68,7 @@
                             <i class="fas fa-5x fa-box"></i>
                         </div>
                         <div class="p-3 mt-4">
-                            <h2>Categories Management</h2>
+                            <h2>Categories</h2>
                         </div>
                     </div>
                 </a>
@@ -76,7 +76,7 @@
 
             </div>
             <!--Grid column-->
-            <div class="col-md-4">
+            <div class="col-md-3">
 
                 <!--Card-->
                 <a href="admin/orders">
@@ -85,7 +85,7 @@
                             <i class="fas fa-5x fa-box"></i>
                         </div>
                         <div class="p-3 mt-4">
-                            <h2>Orders <br> Management</h2>
+                            <h2>Orders</h2>
                         </div>
                     </div>
                 </a>

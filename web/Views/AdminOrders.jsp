@@ -22,8 +22,10 @@
 
 <body>
 
-
-<main class="mt-5 pt-4">
+<nav class="nav text-center pt-5">
+    <a href="./"><i class="fas fa-2x fa-home"></i></a>
+</nav>
+<main class="mt-2">
     <div class="container wow fadeIn">
 
         <!-- Heading -->
@@ -60,6 +62,7 @@
                                     <td>${order.getDateCommand()}</td>
                                     <td>${order.getClient().getNom()} ${order.getClient().getPrenom()}</td>
                                     <td>${order.getFrais()}</td>
+                                    <td>${order.getAdressLivraison()}</td>
                                     <td>${order.getEtat()}</td>
                                     <td class="text-center"><a href="admin/orders?del=${order.getIdCommand()}"><i class="text-danger fas fa-2x fa-trash"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href=""><i class="text-success fas fa-2x fa-pen"></i></a></td>
                                 </tr>

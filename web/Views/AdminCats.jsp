@@ -22,8 +22,10 @@
 
 <body>
 
-
-<main class="mt-5 pt-4">
+<nav class="nav text-center pt-5">
+    <a href="../admin"><i class="fas fa-2x fa-home"></i></a>
+</nav>
+<main class="mt-2">
     <div class="container wow fadeIn">
 
         <!-- Heading -->

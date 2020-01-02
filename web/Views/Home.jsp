@@ -210,7 +210,7 @@
                 <!--Grid column-->
                 <c:forEach items="${products}" var="product">
                     <div class="col-lg-4 col-md-3 mb-4">
-                       <a href="product?id=${product.getIdProduit()}">
+                       <a href="product?id=${product.getIdProduct()}">
                                <!--Card-->
                         <div class="card">
                                 <!--Card image-->

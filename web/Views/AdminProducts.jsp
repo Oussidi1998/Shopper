@@ -25,8 +25,10 @@
 
 <body>
 
-
-<main class="mt-5 pt-4">
+<nav class="nav text-center pt-5">
+    <a href="./"><i class="fas fa-2x fa-home"></i></a>
+</nav>
+<main class="mt-2">
     <div class="container wow fadeIn">
 
         <!-- Heading -->
@@ -36,7 +38,7 @@
         <div class="row justify-content-md-center mb-5">
 
             <!--Grid column-->
-            <div class="col-md-6">
+            <div class="col-md-12">
 
                 <!--Card-->
                 <div class="card">
@@ -59,7 +61,7 @@
                             <tbody>
                             <c:forEach var="product" items="${products}">
                                 <tr>
-                                    <td><%--<img src="data:image/jpg;base64,${product.getBase64Image()}" width="150px" height="auto" alt="">--%> ...</td>
+                                    <td><img src="data:image/jpg;base64,${product.getBase64Image()}" width="60px" height="auto" alt=""></td>
                                     <td>${product.getLabel()}</td>
                                     <td>${product.getPrix()}</td>
                                     <td>${product.getPromo()}</td>
@@ -102,20 +104,20 @@
                         <div class="col"><input type="number"  step="0.00" class="form-control p-4 " name="prix" placeholder="Prix"></div>
                     </div>
                     <div class="form-group row mb-4">
-                        <div class="col"><select class="form-control" name="gender">
+                        <div class="col"><select class="form-control" name="category">
                             <option selected disabled>--Category--</option>
                             <c:forEach var="cat" items="${cats}">
-                                <option value="${cat.getIdCategory()}">${cat.geCategory()}</option>
+                                <option value="${cat.getIdCategory()}">${cat.getCategory()}</option>
                             </c:forEach></select>
                         </div>
                         <div class="col"><input type="number" class="form-control p-4 " name="promo" placeholder="Promo (%)"></div>
                     </div>
                     <div class="form-group mb-4">
                         <label for="">Product image</label>
-                        <input type="file" class="form-control p-4 " name="image">
+                        <input type="file" class="form-control" name="image">
                     </div>
                     <div class="form-group row mb-5">
-                        <div class="col"><textarea name="description" class="form-control" cols="40" rows="3" placeholder="Description"></textarea></div>
+                        <div class="col"><textarea  name="description" class="form-control" cols="40" rows="3" placeholder="Description"></textarea></div>
                     </div>
 
                     <div class="text-center">
@@ -126,6 +128,23 @@
         </div>
     </div>
 </div>
+
+
+<!-- SCRIPTS -->
+<!-- JQuery -->
+<script type="text/javascript"><%@include file="../js/jquery-3.4.1.min.js"%></script>
+<!-- Bootstrap tooltips -->
+<script type="text/javascript"><%@include file="../js/popper.min.js"%></script>
+<!-- Bootstrap core JavaScript -->
+<script type="text/javascript"><%@include file="../js/bootstrap.min.js"%></script>
+<!-- MDB core JavaScript -->
+<script type="text/javascript"><%@include file="../js/mdb.min.js"%></script>
+<!-- Initializations -->
+<script type="text/javascript">
+    // Animations initialization
+    new WOW().init();
+
+</script>
 
 <!--Main layout-->
 </body>
