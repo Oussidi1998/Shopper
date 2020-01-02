@@ -24,17 +24,18 @@ Simple E-commerce App made with Java EE (MVC and JPA)
 
 ## Project Structure
 
-.
-├── src
-    ├── META-INF
-    └── App
-    	├── Controllers
-    	├── Entities
-    	├── Services
-    	├── Utils
-    	└── README.md
-└── web
-    ├── Views    
-    ├── CSS/JS/Fonts
-    └── WEB-INF
+
+	├── src
+	    ├── META-INF
+	    └── App
+		├── Controllers
+		├── Entities
+		├── Services
+		├── Utils
+		└── README.md
+	└── web
+	    ├── Views    
+	    ├── CSS/JS/Fonts
+	    └── WEB-INF
+    
 	
