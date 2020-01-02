@@ -11,17 +11,17 @@ public class Category implements Serializable {
     // attributs
     private Long idCategory;
     private String category;
-    private List<Produit> produitList;
+    private List<Product> productList;
 
 
     // relationships
     @OneToMany(mappedBy = "category")
-    public List<Produit> getProduitList() {
-        return produitList;
+    public List<Product> getProductList() {
+        return productList;
     }
 
-    public void setProduitList(List<Produit> produitList) {
-        this.produitList = produitList;
+    public void setProductList(List<Product> productList) {
+        this.productList = productList;
     }
 
     // constructors
@@ -34,6 +34,7 @@ public class Category implements Serializable {
     // getter and setters
     @Id
     @Column(name = "id_category")
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     public Long getIdCategory() {
         return idCategory;
     }
@@ -64,6 +65,6 @@ public class Category implements Serializable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(idCategory, category, produitList);
+        return Objects.hash(idCategory, category, productList);
     }
 }

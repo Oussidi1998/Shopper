@@ -1,4 +1,23 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ page import="App.Utils.PanierItem" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="com.fasterxml.jackson.databind.ObjectMapper" %>
+<%@ page import="java.net.URLDecoder" %>
+<%@ page import="com.fasterxml.jackson.core.type.TypeReference" %>
+<%@ page import="App.Utils.Util" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+    // for login
+    HttpSession UserSession = request.getSession();
+    // for cookies cart and nb element in cart
+    Cookie panierCookie=Util.getCookie(request,"panier");
+    ArrayList<PanierItem> panierItems;
+    if (panierCookie!=null){
+        panierItems = new ObjectMapper().readValue(URLDecoder.decode(panierCookie.getValue(),"UTF-8"),new TypeReference<ArrayList<PanierItem>>(){});
+    }
+%>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -54,7 +73,7 @@
 
         <!-- Brand -->
         <a class="navbar-brand waves-effect" href="./">
-            <strong class="blue-text">Shopper</strong>
+            <strong class="blue-text">Shopper </strong>
         </a>
 
         <!-- Collapse -->
@@ -73,7 +92,7 @@
             <ul class="navbar-nav nav-flex-icons">
                 <li class="nav-item">
                     <a href="cart" class="nav-link waves-effect">
-                        <span class="badge red z-depth-1 mr-1"> 1 </span>
+                        <span class="badge red z-depth-1 mr-1"><c:out value="${fn:length(panierItems)}" /></span>
                         <i class="fas fa-shopping-cart"></i>
                         <span class="clearfix d-none d-sm-inline-block"> Cart </span>
                     </a>
@@ -88,12 +107,28 @@
                         <i class="fab fa-twitter"></i>
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link  waves-effect" data-toggle="modal" data-target="#modalLogin">Sign In</a>
-                </li>
-                <li class="nav-item">
-                    <button class="nav-link border border-light rounded waves-effect" data-toggle="modal" data-target="#modalRegister">Register</button>
-                </li>
+               <c:choose>
+                   <c:when test="${not empty sessionScope.user}">
+                       <li class="nav-item">
+                           <div class="dropdown">
+                               <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                      ${sessionScope.user}
+                               </button>
+                               <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                   <a class="dropdown-item" href="home?logout=yes">Logout</a>
+                               </div>
+                           </div>
+                       </li>
+                   </c:when>
+                   <c:otherwise>
+                       <li class="nav-item">
+                           <a class="nav-link  waves-effect" data-toggle="modal" data-target="#modalLogin">Sign In</a>
+                       </li>
+                       <li class="nav-item">
+                           <button class="nav-link border border-light rounded waves-effect" data-toggle="modal" data-target="#modalRegister">Register</button>
+                       </li>
+                   </c:otherwise>
+               </c:choose>
             </ul>
 
         </div>

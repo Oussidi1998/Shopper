@@ -2,7 +2,6 @@ package App.Entities;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -15,44 +14,44 @@ public class Client implements Serializable {
     private String prenom;
     private String civil;
     private String email;
-    private String username;
     private String password;
     private String adresse;
     private String pays;
     private String ville;
     private int zipcode;
-    private byte[] avatar;
-    private List<Command> commandList;
+    private List<Order> orderList;
+
 
     // relationships
     @OneToMany(mappedBy = "client")
-    public List<Command> getCommandList() {
-        return commandList;
+    public List<Order> getOrderList() {
+        return orderList;
     }
-    public void setCommandList(List<Command> commandList) {
-        this.commandList = commandList;
+    public void setOrderList(List<Order> orderList) {
+        this.orderList = orderList;
     }
 
     // constructors
     public  Client(){}
-    public Client(Long idClient, String nom, String prenom, String civil, String email, String username, String password, String adresse, String pays, String ville, int zipcode, byte[] avatar) {
-        this.idClient = idClient;
+    public Client(String nom, String prenom, String gender, String mail, String pwd, String address, String pays, String city, int zipcode) {
         this.nom = nom;
         this.prenom = prenom;
-        this.civil = civil;
-        this.email = email;
-        this.username = username;
-        this.password = password;
-        this.adresse = adresse;
+        this.civil = gender;
+        this.email = mail;
+        this.password = pwd;
+        this.adresse = address;
         this.pays = pays;
-        this.ville = ville;
+        this.ville = city;
         this.zipcode = zipcode;
-        this.avatar = avatar;
+    }
+    public Client(Long idClient, String nom, String prenom, String civil, String email, String password, String adresse, String pays, String ville, int zipcode) {
+        this(nom,prenom,civil,email,password,adresse,pays,ville,zipcode);
+        this.idClient = idClient;
     }
 
     // getter and setters
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name = "id_client")
     public Long getIdClient() {
         return idClient;
@@ -96,15 +95,6 @@ public class Client implements Serializable {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    @Column(name = "username")
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
     }
 
     @Column(name = "password")
@@ -152,18 +142,6 @@ public class Client implements Serializable {
         this.zipcode = zipcode;
     }
 
-    @Lob
-    @Basic(fetch = FetchType.LAZY)
-    @Column(name = "avatar")
-    public byte[] getAvatar() {
-        return avatar;
-    }
-
-    public void setAvatar(byte[] avatar) {
-        this.avatar = avatar;
-    }
-
-
     // functions
     @Override
     public boolean equals(Object o) {
@@ -176,18 +154,14 @@ public class Client implements Serializable {
                 Objects.equals(prenom, client.prenom) &&
                 Objects.equals(civil, client.civil) &&
                 Objects.equals(email, client.email) &&
-                Objects.equals(username, client.username) &&
                 Objects.equals(password, client.password) &&
                 Objects.equals(adresse, client.adresse) &&
                 Objects.equals(pays, client.pays) &&
-                Objects.equals(ville, client.ville) &&
-                Objects.equals(avatar, client.avatar);
+                Objects.equals(ville, client.ville);
     }
 
     @Override
     public int hashCode() {
-        int result = Objects.hash(idClient, nom, prenom, civil, email, username, password, adresse, pays, ville, zipcode, commandList);
-        result = 31 * result + Arrays.hashCode(avatar);
-        return result;
+        return Objects.hash(idClient, nom, prenom, civil, email, password, adresse, pays, ville, zipcode, orderList);
     }
 }

@@ -1,7 +1,7 @@
 <%@ page import="java.util.List" %>
-<%@ page import="App.Entities.Category" %>
+<%@ page import="App.Entities.Order" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<% List<Category> categories = (List<Category> ) request.getAttribute("categories"); %>
+<% List<Order> orders = (List<Order> ) request.getAttribute("orders"); %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -27,13 +27,13 @@
     <div class="container wow fadeIn">
 
         <!-- Heading -->
-        <h2 class="my-5 h2 text-center">Manage Categories</h2>
+        <h2 class="my-5 h2 text-center">Manage Orders</h2>
 
         <!--Grid row-->
         <div class="row justify-content-md-center mb-5">
 
             <!--Grid column-->
-            <div class="col-md-6">
+            <div class="col-md-12">
 
                 <!--Card-->
                 <div class="card">
@@ -44,22 +44,28 @@
                         <table class="table">
                             <thead class="thead-dark">
                             <tr>
-                                <th scope="col">Category</th>
+                                <th scope="col">OrderID</th>
+                                <th scope="col">Date Order</th>
+                                <th scope="col">Client</th>
+                                <th scope="col">Address Livraison</th>
+                                <th scope="col">Frais</th>
+                                <th scope="col">l'etat</th>
                                 <th scope="col" class="text-center">Actions</th>
                             </tr>
                             </thead>
                             <tbody>
-                            <c:forEach var="category" items="${categories}">
+                            <c:forEach var="order" items="${orders}">
                                 <tr>
-                                    <td width="70%">${category.getCategory()}</td>
-                                    <td class="text-center"><a href="admin/categories?del=${category.getIdCategory()}"><i class="text-danger fas fa-2x fa-trash"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href=""><i class="text-success fas fa-2x fa-pen"></i></a></td>
+                                    <td>${order.getIdCommand()}</td>
+                                    <td>${order.getDateCommand()}</td>
+                                    <td>${order.getClient().getNom()} ${order.getClient().getPrenom()}</td>
+                                    <td>${order.getFrais()}</td>
+                                    <td>${order.getEtat()}</td>
+                                    <td class="text-center"><a href="admin/orders?del=${order.getIdCommand()}"><i class="text-danger fas fa-2x fa-trash"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href=""><i class="text-success fas fa-2x fa-pen"></i></a></td>
                                 </tr>
                             </c:forEach>
                             </tbody>
                         </table>
-
-                        <hr class="mb-4">
-                        <a class="btn btn-primary btn-lg btn-block">Add Category</a>
                     </form>
 
                 </div>

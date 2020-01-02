@@ -1,7 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page import="App.Entities.Produit" %>
+<%@ page import="App.Entities.Product" %>
 
-<% Produit produit= (Produit) request.getAttribute("product");%>
+<% Product product= (Product) request.getAttribute("product");%>
 
 <%--
   Created by IntelliJ IDEA.
@@ -16,8 +16,7 @@
 
 
 <!--Main layout-->
-<c:set var="produit" value="${produit}" scope="page"/> <br><br><br><br><br>
-<c:out value="${produit.getLabel()}"/>
+<c:set var="product" value="${product}" scope="page"/>
 <main class="mt-5 pt-4">
     <div class="container dark-grey-text mt-5">
 
@@ -27,7 +26,7 @@
             <!--Grid column-->
             <div class="col-md-6 mb-4">
 
-                <img src="data:image/jpg;base64,${produit.getBase64Image()}" class="img-fluid" alt="">
+                <img src="data:image/jpg;base64,${product.getBase64Image()}" class="img-fluid" alt="">
 
             </div>
             <!--Grid column-->
@@ -39,24 +38,30 @@
                 <div class="p-4">
 
                     <div class="mb-3">
-                        <a href="">
-                            <span class="badge purple mr-1"><c:out value="${produit.getCategory().getCategory()}"/></span>
+                        <a href="home?cat=${product.getCategory().getIdCategory()}">
+                            <span class="badge purple mr-1">${product.getCategory().getCategory()}</span>
                         </a>
                     </div>
 
                     <p class="lead">
-              <span class="mr-1">
-                <del><c:out value="${produit.getPrix()}"/></del>
-              </span>
-                        <span><c:out value="${produit.getPrix()*produit.getPromo()/100}"/></span>
+                          <c:if test="${product.getPromo()>0}" >
+                              <span class="mr-1">
+                                <del>${product.getPrix()} DH</del>
+                              </span>
+                              <span>${product.getPrix()-product.getPrix()*product.getPromo()/100} DH</span>
+                          </c:if>
+                        <c:if test="${product.getPromo()==0}" >
+                            <span>${product.getPrix()} DH</span>
+                        </c:if>
                     </p>
 
                     <p class="lead font-weight-bold">Description</p>
 
-                    <p><c:out value="${produit.getDescription()}"/></p>
+                    <p>${product.getDescription()}</p>
 
-                    <form action="" method="post" class="d-flex justify-content-left">
+                    <form action="product" method="post" class="d-flex justify-content-left">
                         <!-- Default input -->
+                        <input type="hidden" name="id_produit" value="${product.getIdProduit()}" >
                         <input type="number" name="qte" value="1" aria-label="Search" class="form-control" style="width: 100px">
                         <button class="btn btn-primary btn-md my-0 p" type="submit">Add to cart
                             <i class="fas fa-shopping-cart ml-1"></i>

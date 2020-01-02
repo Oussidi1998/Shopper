@@ -1,7 +1,7 @@
 <%@ page import="java.util.List" %>
-<%@ page import="App.Entities.Category" %>
+<%@ page import="App.Entities.Client" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<% List<Category> categories = (List<Category> ) request.getAttribute("categories"); %>
+<% List<Client> clients = (List<Client> ) request.getAttribute("clients"); %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -27,7 +27,7 @@
     <div class="container wow fadeIn">
 
         <!-- Heading -->
-        <h2 class="my-5 h2 text-center">Manage Categories</h2>
+        <h2 class="my-5 h2 text-center">Manage Clients</h2>
 
         <!--Grid row-->
         <div class="row justify-content-md-center mb-5">
@@ -44,22 +44,24 @@
                         <table class="table">
                             <thead class="thead-dark">
                             <tr>
+                                <th scope="col">First Name </th>
+                                <th scope="col">Last Name</th>
+                                <th scope="col">Email</th>
+                                <th scope="col">Category</th>
+                                <th scope="col">Category</th>
                                 <th scope="col">Category</th>
                                 <th scope="col" class="text-center">Actions</th>
                             </tr>
                             </thead>
                             <tbody>
-                            <c:forEach var="category" items="${categories}">
+                            <c:forEach var="client" items="${clients}">
                                 <tr>
-                                    <td width="70%">${category.getCategory()}</td>
-                                    <td class="text-center"><a href="admin/categories?del=${category.getIdCategory()}"><i class="text-danger fas fa-2x fa-trash"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href=""><i class="text-success fas fa-2x fa-pen"></i></a></td>
+                                    <td width="70%">${client.getIdClient()}</td>
+                                    <td class="text-center"><a href="admin/categories?del=${client.getIdClient()}"><i class="text-danger fas fa-2x fa-trash"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href=""><i class="text-success fas fa-2x fa-pen"></i></a></td>
                                 </tr>
                             </c:forEach>
                             </tbody>
                         </table>
-
-                        <hr class="mb-4">
-                        <a class="btn btn-primary btn-lg btn-block">Add Category</a>
                     </form>
 
                 </div>

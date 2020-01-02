@@ -8,32 +8,31 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
-public class Command implements Serializable {
+public class Order implements Serializable {
 
     // attributs
     private Long idCommand;
     private Date dateCommand;
     private String adressLivraison;
-    private int frais;
+    private double frais;
     private byte etat;
     private Client client;
-    private List<DetailCommand> commandItems=new ArrayList<>() ;
+    private List<OrderDetail> commandItems=new ArrayList<>() ;
 
     // constructors
-    public Command(Long idCommand, Date dateCommand, String adressLivraison, int frais, byte etat, Client client) {
-        this.idCommand = idCommand;
+    public Order(Date dateCommand, String adressLivraison, double frais, Client client) {
         this.dateCommand = dateCommand;
         this.adressLivraison = adressLivraison;
         this.frais = frais;
-        this.etat = etat;
+        this.etat = 0;
         this.client = client;
     }
 
-    public Command(){}
+    public Order(){}
 
     // getters and setters
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name = "id_command")
     public Long getIdCommand() {
         return idCommand;
@@ -63,11 +62,11 @@ public class Command implements Serializable {
     }
 
     @Column(name = "frais")
-    public int getFrais() {
+    public double getFrais() {
         return frais;
     }
 
-    public void setFrais(int frais) {
+    public void setFrais(double frais) {
         this.frais = frais;
     }
 
@@ -90,12 +89,12 @@ public class Command implements Serializable {
         this.client = client;
     }
 
-    @OneToMany(mappedBy = "command")
-    public List<DetailCommand> getCommandItems() {
+    @OneToMany(mappedBy = "order")
+    public List<OrderDetail> getCommandItems() {
         return commandItems;
     }
 
-    public void setCommandItems(List<DetailCommand> commandItems) {
+    public void setCommandItems(List<OrderDetail> commandItems) {
         commandItems = commandItems;
     }
 
@@ -105,12 +104,12 @@ public class Command implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Command command = (Command) o;
-        return idCommand == command.idCommand &&
-                frais == command.frais &&
-                etat == command.etat &&
-                Objects.equals(dateCommand, command.dateCommand) &&
-                Objects.equals(adressLivraison, command.adressLivraison);
+        Order order = (Order) o;
+        return idCommand == order.idCommand &&
+                frais == order.frais &&
+                etat == order.etat &&
+                Objects.equals(dateCommand, order.dateCommand) &&
+                Objects.equals(adressLivraison, order.adressLivraison);
     }
 
     @Override

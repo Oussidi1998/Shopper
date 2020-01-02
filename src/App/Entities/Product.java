@@ -1,46 +1,48 @@
 package App.Entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.*;
 
 @Entity
-public class Produit implements Serializable {
+public class Product implements Serializable {
 
     // attributs
-    private Long idProduit;
+    private Long idProduct;
     private String label;
     private String description;
-    private int prix;
+    private double prix;
     private  byte[] image;
     private String base64Image;
-    private int promo;
+    private double promo;
+    @JsonIgnore // to break the infinite recursion when serializing items in panier
     private Category category;
-    private List<DetailCommand> listProductInCommands =new ArrayList<>() ;
+    @JsonIgnore // to break the infinite recursion when serializing items in panier
+    private List<OrderDetail> listProductInCommands =new ArrayList<>() ;
 
     // constructors
-    public Produit(Long idProduit, String label, String description, int prix, byte[] image, String base64Image, int promo, Category category) {
-        this.idProduit = idProduit;
+    public Product(String label, String description, double prix, byte[] image, double promo, Category category) {
         this.label = label;
         this.description = description;
         this.prix = prix;
         this.image = image;
-        this.base64Image = base64Image;
         this.promo = promo;
         this.category = category;
     }
 
-    public Produit(){}
+    public Product(){}
 
     // getters and setters
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name = "id_produit")
-    public Long getIdProduit() {
-        return idProduit;
+    public Long getIdProduct() {
+        return idProduct;
     }
-    public void setIdProduit(Long idProduit) {
-        this.idProduit = idProduit;
+    public void setIdProduct(Long idProduit) {
+        this.idProduct = idProduit;
     }
 
     @Transient
@@ -68,11 +70,11 @@ public class Produit implements Serializable {
     }
 
     @Column(name = "prix")
-    public int getPrix() {
+    public double getPrix() {
         return prix;
     }
 
-    public void setPrix(int prix) {
+    public void setPrix(double prix) {
         this.prix = prix;
     }
 
@@ -88,25 +90,27 @@ public class Produit implements Serializable {
     }
 
     @Column(name = "promo")
-    public int getPromo() {
+    public double getPromo() {
         return promo;
     }
 
-    public void setPromo(int promo) {
+    public void setPromo(double promo) {
         this.promo = promo;
     }
 
     // relationships
-    @OneToMany(mappedBy = "produit")
-    public List<DetailCommand> getCommandItems() {
+    @OneToMany(mappedBy = "product")
+    @JsonIgnore
+    public List<OrderDetail> getCommandItems() {
         return listProductInCommands;
     }
-    public void setCommandItems(List<DetailCommand> items) {
+    public void setCommandItems(List<OrderDetail> items) {
         listProductInCommands = items;
     }
 
     @ManyToOne
     @JoinColumn(name = "id_category")
+    @JsonIgnore
     public Category getCategory() {
         return category;
     }
@@ -120,18 +124,18 @@ public class Produit implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Produit produit = (Produit) o;
-        return idProduit == produit.idProduit &&
-                prix == produit.prix &&
-                promo == produit.promo &&
-                Objects.equals(label, produit.label) &&
-                Objects.equals(description, produit.description) &&
-                Objects.equals(image, produit.image);
+        Product product = (Product) o;
+        return idProduct == product.idProduct &&
+                prix == product.prix &&
+                promo == product.promo &&
+                Objects.equals(label, product.label) &&
+                Objects.equals(description, product.description) &&
+                Objects.equals(image, product.image);
     }
 
     @Override
     public int hashCode() {
-        int result = Objects.hash(idProduit, label, description, prix, base64Image, promo, category, listProductInCommands);
+        int result = Objects.hash(idProduct, label, description, prix, base64Image, promo, category, listProductInCommands);
         result = 31 * result + Arrays.hashCode(image);
         return result;
     }

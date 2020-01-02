@@ -1,11 +1,19 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri = "http://java.sun.com/jsp/jstl/functions" prefix = "fn" %>
-<%@ page import="App.Entities.Category" %>
-<%@ page import="App.Entities.Produit" %>
-<%@ page import="java.util.List" %>
+<%@ page import="App.Utils.PanierItem" %>
+<%@ page import="com.fasterxml.jackson.databind.ObjectMapper" %>
+<%@ page import="java.net.URLDecoder" %>
+<%@ page import="com.fasterxml.jackson.core.type.TypeReference" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="App.Utils.Util" %>
 
-<% List<Category> categories=(List<Category>) request.getAttribute("categories");%>
-<% List<Produit> produits=(List<Produit>) request.getAttribute("produits");%>
+<%
+    Cookie panierCookie= Util.getCookie(request,"panier");
+    ArrayList<PanierItem> panierItems=new ArrayList<>();
+    if (panierCookie!=null){
+        panierItems = new ObjectMapper().readValue(URLDecoder.decode(panierCookie.getValue(),"UTF-8"),new TypeReference<ArrayList<PanierItem>>(){});
+    }
+%>
 
 <%--
   Created by IntelliJ IDEA.
@@ -26,67 +34,99 @@
         <h2 class="my-5 h2 text-center">Cart</h2>
 
         <!--Grid row-->
-        <div class="row justify-content-md-center mb-5">
+        <c:choose>
+            <c:when test="${panierItems.size()>=1}">
+                <div class="row justify-content-md-center mb-5">
+                    <!--Grid column-->
+                    <div class="col">
+                        <!--Card-->
+                        <div class="card">
+                            <!--Card content-->
+                            <form method="post" class="card-body">
 
-            <!--Grid column-->
-            <div class="col">
+                                <table class="table">
+                                    <thead class="thead-dark">
+                                    <tr>
+                                        <th scope="col">Action</th>
+                                        <th scope="col">Product</th>
+                                        <th scope="col">Price</th>
+                                        <th scope="col">Quantity</th>
+                                        <th scope="col">Total</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <c:set var="count" value="0" scope="page" />
+                                    <c:forEach var="item" items="${panierItems}" >
+                                        <tr>
+                                            <td><a href="cart?sup=${item.getIdProduct()}"><i class="fas fa-trash"></i></a></td>
+                                            <td>${item.getLabel()}</td>
+                                            <td>${item.getPrice()}</td>
+                                            <td width="150px"><input type="hidden" name="id_product_${count}" value="${item.getIdProduct()}"><input type="number" value="${item.getQte()}" class="form-control" name="qt_${count}" /></td>
+                                            <td>${item.getPrice()*item.getQte()}</td>
+                                        </tr>
+                                        <c:set var="count" value="${count + 1}" scope="page"/>
+                                    </c:forEach>
+                                    </tbody>
+                                </table>
 
-                <!--Card-->
-                <div class="card">
+                                <hr class="mb-4">
+                                <div class="row">
+                                    <div class="col">
+                                        <a href="home" class="btn btn-primary btn-lg btn-block">Continue Buying</a>
+                                    </div>
+                                    <div class="col">
+                                        <button class="btn btn-default btn-lg btn-block" name="refreshCart" value="refreshCart" type="submit">Refresh Cart</button>
+                                    </div>
+                                    <div class="col">
+                                        <a href="cart?empty=1" class="btn btn-default btn-lg btn-block" >Empty Cart</a>
+                                    </div>
+                                    <div class="col">
+                                        <a class="btn btn-primary btn-lg btn-block" href="checkout">Checkout</a>
+                                    </div>
 
-                    <!--Card content-->
-                    <form class="card-body">
+                                </div>
 
-                        <table class="table">
-                            <thead class="thead-dark">
-                            <tr>
-                                <th scope="col">Action</th>
-                                <th scope="col">Product</th>
-                                <th scope="col">Description</th>
-                                <th scope="col">Price</th>
-                                <th scope="col">Quantity</th>
-                                <th scope="col">Total</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
-                                <td><a href="cart?sup="><i class="fas fa-trash"></i></a></td>
-                                <td>Mark</td>
-                                <td>Otto</td>
-                                <td>mdo</td>
-                                <td width="150px"><input type="number" class="form-control" name="qt[]" /></td>
-                                <td>mdo</td>
-                            </tr>
-                            </tbody>
-                        </table>
-
-                        <hr class="mb-4">
-                        <div class="row">
-                            <div class="col">
-                                <a href="home" class="btn btn-primary btn-lg btn-block">Continue Buying</a>
-                            </div>
-                            <div class="col">
-                                <button class="btn btn-default btn-lg btn-block" name="refreshCart" type="submit">Refresh Cart</button>
-                            </div>
-                            <div class="col">
-                                <a href="cart?empty=1" class="btn btn-default btn-lg btn-block" >Empty Cart</a>
-                            </div>
-                            <div class="col">
-                                <button class="btn btn-primary btn-lg btn-block" name="checkout" type="submit">Checkout</button>
-                            </div>
+                            </form>
 
                         </div>
+                        <!--/.Card-->
 
-                    </form>
+                    </div>
+                    <!--Grid column-->
+                    <!--Grid column-->
 
                 </div>
-                <!--/.Card-->
+            </c:when>
+            <c:otherwise>
+                <div class="row justify-content-md-center mb-5">
+                    <!--Grid column-->
+                    <div class="col">
+                        <!--Card-->
+                        <div class="card">
+                            <!--Card content-->
+                            <form class="card-body">
+                                <div>
+                                    Your cart Is empty add some items now
+                                </div>
+                                <hr class="mb-4">
+                                <div class="row">
+                                    <div class="col">
+                                        <a href="home" class="btn btn-primary btn-lg btn-block">Continue Buying</a>
+                                    </div>
+                                </div>
 
-            </div>
-            <!--Grid column-->
-            <!--Grid column-->
+                            </form>
 
-        </div>
+                        </div>
+                        <!--/.Card-->
+
+                    </div>
+                    <!--Grid column-->
+                    <!--Grid column-->
+
+                </div>
+            </c:otherwise>
+        </c:choose>
         <!--Grid row-->
 
     </div>

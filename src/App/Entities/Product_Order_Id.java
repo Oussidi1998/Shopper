@@ -6,26 +6,26 @@ import java.io.Serializable;
 import java.util.Objects;
 
 @Embeddable
-public class Produit_Command_Id  implements Serializable {
+public class Product_Order_Id implements Serializable {
 
     @Column(name = "id_produit")
-    private Long idProduit;
+    private Long idProduct;
     @Column(name = "id_command")
     private Long idCommand;
 
-    public Produit_Command_Id(){}
+    public Product_Order_Id(){}
 
-    public Produit_Command_Id(Long idProduit, Long idCommand) {
-        this.idProduit = idProduit;
+    public Product_Order_Id(Long idProduit, Long idCommand) {
+        this.idProduct = idProduit;
         this.idCommand = idCommand;
     }
 
-    public Long getIdProduit() {
-        return idProduit;
+    public Long getIdProduct() {
+        return idProduct;
     }
 
-    public void setIdProduit(Long idProduit) {
-        this.idProduit = idProduit;
+    public void setIdProduct(Long idProduit) {
+        this.idProduct = idProduit;
     }
 
     public Long getIdCommand() {
@@ -40,13 +40,13 @@ public class Produit_Command_Id  implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Produit_Command_Id that = (Produit_Command_Id) o;
-        return Objects.equals(idProduit, that.idProduit) &&
+        Product_Order_Id that = (Product_Order_Id) o;
+        return Objects.equals(idProduct, that.idProduct) &&
                 Objects.equals(idCommand, that.idCommand);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(idProduit, idCommand);
+        return Objects.hash(idProduct, idCommand);
     }
 }

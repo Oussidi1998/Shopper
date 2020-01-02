@@ -1,9 +1,9 @@
 package App.Controllers;
 
 import App.Entities.Category;
-import App.Entities.Produit;
+import App.Entities.Product;
 import App.Services.CategoryServices;
-import App.Services.ProduitServices;
+import App.Services.ProductServices;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -19,20 +19,31 @@ public class HomeController extends HttpServlet {
 
     protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 
-        ProduitServices serviceProducts = new ProduitServices();
+        // for logout
+        if (req.getParameter("logout")!=null && req.getParameter("logout").equals("yes")){
+            req.getSession().invalidate();
+        }
+
+        ProductServices serviceProducts = new ProductServices();
         CategoryServices serviceCats = new CategoryServices();
 
-        List<Produit> listProduits = serviceProducts.getAllProducts();
-        String category = req.getParameter("cat");
-        if (category!=null && category.length()>=1){
-            listProduits = serviceProducts.getListProduitByCatgeory(Long.decode(category));
-            System.out.println(listProduits.size());
-        }
+        List<Product> listProducts = serviceProducts.getAllProducts();
         List<Category> listCategories = serviceCats.getAllCategories();
 
-        req.setAttribute("produits",listProduits);
+        // get products of specific category
+        String category = req.getParameter("cat");
+        if (category!=null && category.length()>=1){
+            listProducts = serviceProducts.getListProduitByCatgeory(Long.decode(category));
+        }
+
+        System.out.println(listProducts.size());
+        System.out.println(listCategories.size());
+
+        req.setAttribute("products", listProducts);
         req.setAttribute("categories",listCategories);
         req.getRequestDispatcher("Views/Home.jsp").forward(req,res);
     }
+
+
 
 }

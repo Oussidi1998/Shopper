@@ -1,11 +1,14 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri = "http://java.sun.com/jsp/jstl/functions" prefix = "fn" %>
 <%@ page import="App.Entities.Category" %>
-<%@ page import="App.Entities.Produit" %>
+<%@ page import="App.Entities.Product" %>
 <%@ page import="java.util.List" %>
 
-<% List<Category> categories=(List<Category>) request.getAttribute("categories");%>
-<% List<Produit> produits=(List<Produit>) request.getAttribute("produits");%>
+<%
+    List<Category> categories=(List<Category>) request.getAttribute("categories");
+    List<Product> products =(List<Product>) request.getAttribute("products");
+    String msg = (String) request.getAttribute("msg");
+%>
 
 <%--
   Created by IntelliJ IDEA.
@@ -43,22 +46,18 @@
                     <!-- Content -->
                     <div class="text-center white-text mx-5 wow fadeIn">
                         <h1 class="mb-4">
-                            <strong>Learn Bootstrap 4 with MDB</strong>
+                            <strong>Shop is fun</strong>
                         </h1>
 
                         <p>
-                            <strong>Best & free guide of responsive web design</strong>
+                            <strong>BROWSE OUR PREMIUM PRODUCT</strong>
                         </p>
 
                         <p class="mb-4 d-none d-md-block">
-                            <strong>The most comprehensive tutorial for the Bootstrap 4. Loved by over 500 000 users. Video and
-                                written versions
-                                available. Create your own, stunning website.</strong>
+                            <strong>Us which over of signs divide dominion deep  fill bring <br> they're meat beho upon own earth without morning over third. Their male dry. They are great appear whose land fly grass.</strong>
                         </p>
 
-                        <a target="_blank" href="https://mdbootstrap.com/education/bootstrap/" class="btn btn-outline-white btn-lg">Start
-                            free tutorial
-                            <i class="fas fa-graduation-cap ml-2"></i>
+                        <a  href="" class="btn btn-outline-white btn-lg">Start Buying Now
                         </a>
                     </div>
                     <!-- Content -->
@@ -80,22 +79,19 @@
                     <!-- Content -->
                     <div class="text-center white-text mx-5 wow fadeIn">
                         <h1 class="mb-4">
-                            <strong>Learn Bootstrap 4 with MDB</strong>
+                            <strong>Shop is fun</strong>
                         </h1>
 
                         <p>
-                            <strong>Best & free guide of responsive web design</strong>
+                            <strong>BROWSE OUR PREMIUM PRODUCT</strong>
                         </p>
 
                         <p class="mb-4 d-none d-md-block">
-                            <strong>The most comprehensive tutorial for the Bootstrap 4. Loved by over 500 000 users. Video and
-                                written versions
-                                available. Create your own, stunning website.</strong>
+                            <strong>Us which over of signs divide dominion deep  fill bring <br> they're meat beho upon own earth without morning over third. Their male dry. They are great appear whose land fly grass.</strong>
                         </p>
 
-                        <a target="_blank" href="https://mdbootstrap.com/education/bootstrap/" class="btn btn-outline-white btn-lg">Start
-                            free tutorial
-                            <i class="fas fa-graduation-cap ml-2"></i>
+                        <a  href="" class="btn btn-outline-white btn-lg">Start
+                            Buying Now
                         </a>
                     </div>
                     <!-- Content -->
@@ -117,22 +113,19 @@
                     <!-- Content -->
                     <div class="text-center white-text mx-5 wow fadeIn">
                         <h1 class="mb-4">
-                            <strong>Learn Bootstrap 4 with MDB</strong>
+                            <strong>Shop is fun</strong>
                         </h1>
 
                         <p>
-                            <strong>Best & free guide of responsive web design</strong>
+                            <strong>BROWSE OUR PREMIUM PRODUCT</strong>
                         </p>
 
                         <p class="mb-4 d-none d-md-block">
-                            <strong>The most comprehensive tutorial for the Bootstrap 4. Loved by over 500 000 users. Video and
-                                written versions
-                                available. Create your own, stunning website.</strong>
+                            <strong>Us which over of signs divide dominion deep  fill bring <br> they're meat beho upon own earth without morning over third. Their male dry. They are great appear whose land fly grass.</strong>
                         </p>
 
-                        <a target="_blank" href="https://mdbootstrap.com/education/bootstrap/" class="btn btn-outline-white btn-lg">Start
-                            free tutorial
-                            <i class="fas fa-graduation-cap ml-2"></i>
+                        <a  href="" class="btn btn-outline-white btn-lg">Start
+                            Buying Now
                         </a>
                     </div>
                     <!-- Content -->
@@ -188,9 +181,9 @@
                         </a>
                     </li>
 
-                    <c:forEach var="cat" items="h" >
+                    <c:forEach var="cat" items="${categories}" >
                         <li class="nav-item">
-                            <a class="nav-link" href="home?cat=<c:out value='${cat.getIdCategory()}'/>"><c:out value="${cat.getCategory()}"/></a>
+                            <a class="nav-link" href="home?cat=${cat.getIdCategory()} ">${cat.getCategory()}</a>
                         </li>
                     </c:forEach>
 
@@ -215,14 +208,14 @@
             <div class="row wow fadeIn">
 
                 <!--Grid column-->
-                <c:forEach items="${produits}" var="product">
-                    <div class="col-lg-3 col-md-6 mb-4">
-                       <a href="product?id=<c:out value="${product.getIdProduit()}"/>">
+                <c:forEach items="${products}" var="product">
+                    <div class="col-lg-4 col-md-3 mb-4">
+                       <a href="product?id=${product.getIdProduit()}">
                                <!--Card-->
                         <div class="card">
                                 <!--Card image-->
-                                <div class="view overlay">
-                                    <img class="card-img-top" alt="" src="data:image/jpg;base64,<c:out value="${product.getBase64Image()}"/>" />
+                                <div class="view overlay p-3">
+                                    <img class="card-img-top" alt="" src="data:image/jpg;base64,${product.getBase64Image()}" />
                                     <div class="mask rgba-white-slight"></div>
                                 </div>
                                 <!--Card image-->
@@ -230,18 +223,18 @@
                                 <!--Card content-->
                                 <div class="card-body text-center">
                                     <!--Category & Title-->
-                                    <h5 class="grey-text"><c:out value="${product.getLabel()}"/></h5>
-                                    <h5>
-                                        <strong>
-                                            <c:if test="${!product.getDescription().equals('')}" >
-                                                <p class="dark-grey-text"><c:out value="${product.getDescription()}"/> ...
-                                                </p>
-                                            </c:if>
-                                        </strong>
-                                    </h5>
+                                    <h5 class="grey-text">${product.getLabel()}</h5>
 
                                     <h4 class="font-weight-bold blue-text">
-                                        <strong><c:out value="${product.getPrix()}"/> DH</strong>
+                                        <c:if test="${product.getPromo()>0}" >
+                                          <span class="mr-1">
+                                            <del>${product.getPrix()} DH</del>
+                                          </span>
+                                            <span>${product.getPrix()-product.getPrix()*product.getPromo()/100} DH</span>
+                                        </c:if>
+                                        <c:if test="${product.getPromo()==0}" >
+                                            <span>${product.getPrix()} DH</span>
+                                        </c:if>
                                     </h4>
                                 </div>
                                 <!--Card content-->
@@ -297,6 +290,9 @@
         <!--Pagination-->
 
     </div>
+    <c:if test="${not empty msg}" >
+        <div class="myalert">${msg}</div>
+    </c:if>
 </main>
 <!--Main layout-->
 

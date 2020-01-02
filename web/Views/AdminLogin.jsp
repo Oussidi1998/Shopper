@@ -1,3 +1,5 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<% String msg  = (String) request.getAttribute("msg"); %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -24,12 +26,15 @@
     <div class="row justify-content-md-center">
         <div class="col-md-6 ">
             <div class="card mt-5 p-5">
-                <form action="/admin">
+                <c:if test="${not empty msg}" >
+                    <div class="alert alert-danger" >${msg}</div>
+                </c:if>
+                <form action="admin" method="post">
                     <div class="form-group mb-4">
-                        <input type="email" class="form-control p-4 " placeholder="Enter email" id="email">
+                        <input type="text" name="username" class="form-control p-4 " placeholder="username" id="username">
                     </div>
                     <div class="form-group  mb-5">
-                        <input type="password" class="form-control p-4" placeholder="Enter password" id="pwd">
+                        <input type="password" name="pwd" class="form-control p-4" placeholder="Password" id="pwd">
                     </div>
                     <div class="text-center">
                         <button type="submit" class="btn btn-primary">Se Connecter</button>
