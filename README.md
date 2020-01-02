@@ -31,8 +31,7 @@ Simple E-commerce App made with Java EE (MVC and JPA)
 		├── Controllers
 		├── Entities
 		├── Services
-		├── Utils
-		└── README.md
+		└── Utils
 	└── web
 	    ├── Views    
 	    ├── CSS/JS/Fonts
