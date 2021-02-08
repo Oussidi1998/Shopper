@@ -50,6 +50,7 @@
             .carousel {
                 height: 100vh;
             }
+
         }
 
         @media (min-width: 800px) and (max-width: 850px) {
@@ -73,7 +74,7 @@
 
         <!-- Brand -->
         <a class="navbar-brand waves-effect" href="./">
-            <strong class="blue-text">Shopper </strong>
+            <strong class="blue-text">Books Network</strong>
         </a>
 
         <!-- Collapse -->
@@ -95,16 +96,6 @@
                         <span class="badge red z-depth-1 mr-1"><c:out value="${fn:length(panierItems)}" /></span>
                         <i class="fas fa-shopping-cart"></i>
                         <span class="clearfix d-none d-sm-inline-block"> Cart </span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link waves-effect">
-                        <i class="fab fa-facebook-f"></i>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="https://twitter.com/MDBootstrap" class="nav-link waves-effect" target="_blank">
-                        <i class="fab fa-twitter"></i>
                     </a>
                 </li>
                <c:choose>

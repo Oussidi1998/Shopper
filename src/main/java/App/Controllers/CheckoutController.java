@@ -61,7 +61,7 @@ public class CheckoutController extends HttpServlet {
                         System.out.println("cookie deleted");
 
                         // send feedback
-                        req.setAttribute("msg","Your order has been saved thanks for purchasing At shopper.com");
+                        req.setAttribute("msg","Your order has been saved thanks for purchasing At Booksy.com");
                     }else{
                         req.setAttribute("msgErr","There was en error while saving your order");
                     }
